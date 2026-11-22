@@ -63,6 +63,7 @@ export default function App() {
     content = (
       <Checker
         password={password}
+        canLock={needsPassword}
         onLocked={() => {
           savePassword("");
           setUnlocked(false);
@@ -131,7 +132,7 @@ function PasswordGate({ onUnlock }) {
   );
 }
 
-function Checker({ password, onLocked }) {
+function Checker({ password, canLock, onLocked }) {
   const [files, setFiles] = useState([]);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -192,7 +193,14 @@ function Checker({ password, onLocked }) {
   return (
     <div className="page">
       <header>
-        <h1>Invoice Checker</h1>
+        <div className="title-row">
+          <h1>Invoice Checker</h1>
+          {canLock && (
+            <button className="lock" onClick={onLocked} disabled={loading} title="Sign out and ask for the password again">
+              🔒 Lock
+            </button>
+          )}
+        </div>
         <p className="subtitle">
           Upload invoices and AI will summarize them and flag anything that looks wrong.
         </p>
