@@ -1,0 +1,19 @@
+# Secrets - never commit your API keys (.env, .env.local, ...)
+.env*
+# ...but the template with placeholder values is safe and useful
+!.env.example
+
+# Vercel's local link info
+.vercel
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Node / React
+node_modules/
+dist/
+
+# Claude Code's local settings (machine-specific paths)
+.claude/
