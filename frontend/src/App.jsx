@@ -47,9 +47,10 @@ export default function App() {
       .catch(() => setNeedsPassword(false) || setUnlocked(true));
   }, []);
 
-  if (needsPassword === null) return <div className="page muted">Loading…</div>;
-  if (!unlocked)
-    return (
+  let content;
+  if (needsPassword === null) content = <div className="page muted">Loading…</div>;
+  else if (!unlocked)
+    content = (
       <PasswordGate
         onUnlock={(pw) => {
           savePassword(pw);
@@ -58,14 +59,33 @@ export default function App() {
         }}
       />
     );
+  else
+    content = (
+      <Checker
+        password={password}
+        onLocked={() => {
+          savePassword("");
+          setUnlocked(false);
+        }}
+      />
+    );
+
   return (
-    <Checker
-      password={password}
-      onLocked={() => {
-        savePassword("");
-        setUnlocked(false);
-      }}
-    />
+    <>
+      {content}
+      <Footer />
+    </>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="footer">
+      Built by Saaransh ·{" "}
+      <a href="https://github.com/saaranshpandoh-sketch/invoice-checker" target="_blank" rel="noreferrer">
+        View on GitHub
+      </a>
+    </footer>
   );
 }
 
